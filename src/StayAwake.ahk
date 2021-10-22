@@ -5,7 +5,7 @@
 
 	Author ....: jNizM
 	Released ..: 2021-10-21
-	Modified ..: 2021-10-21
+	Modified ..: 2021-10-22
 	License ...: MIT
 	GitHub ....: https://github.com/jNizM/stay-awake
 	Forum .....: https://www.autohotkey.com/boards/viewtopic.php?t=95857
@@ -22,9 +22,10 @@ Persistent
 
 ; GLOBALS ===================================================================================================================================================================
 
-app := Map("name", "Stay Awake", "version", "0.1", "release", "2021-10-21", "author", "jNizM", "licence", "MIT")
+app := Map("name", "Stay Awake", "version", "0.2", "release", "2021-10-22", "author", "jNizM", "licence", "MIT")
 
 hFBFBFB := DllCall("gdi32\CreateBitmap", "int", 1, "int", 1, "uint", 0x1, "uint", 32, "int64*", 0xfbfbfb, "ptr")
+hDCDCDC := DllCall("gdi32\CreateBitmap", "int", 1, "int", 1, "uint", 0x1, "uint", 32, "int64*", 0xdcdcdc, "ptr")
 hHLINE  := DllCall("gdi32\CreateBitmap", "int", 1, "int", 2, "uint", 0x1, "uint", 32, "int64*", 0x7fa5a5a57f5a5a5a, "ptr")
 
 
@@ -47,9 +48,6 @@ TrayMain.Add("Mode", TrayMode)
 TrayMain.Add("Keep Screen On", SetDisplayOn)
 TrayMain.Add()
 TrayMain.Add("Open Gui", Gui_Show)
-;TrayMain.Add(Chr(0x221E), GetTimeLeft)
-;TrayMain.Disable(Chr(0x221E))
-;TrayMain.Add()
 TrayMain.Add("Exit", ExitFunc)
 
 
@@ -62,65 +60,70 @@ Main.MarginY := 15
 Main.SetFont("s20 w600", "Segoe UI")
 Main.AddText("xm ym w300 0x200", app["name"])
 
+
 Main.SetFont("s10 w400", "Segoe UI")
-Main.AddGroupBox("xm ym+45 w352 h61 Section")
-Main.AddPicture("xs+1 ys+9 w350 h50 BackgroundTrans", "HBITMAP:*" hFBFBFB)
-Main.AddText("xs+15 ys+23 w245 h20 0x200 BackgroundFBFBFB", "Enable Awake")
-CB01 := Main.AddCheckBox("x+1 yp w75 h20 0x220 BackgroundFBFBFB", "Off ")
+Main.AddPicture("xm   ym+54 w352 h52 BackgroundTrans", "HBITMAP:*" hDCDCDC)
+Main.AddPicture("xm+1 ym+55 w350 h50 BackgroundTrans", "HBITMAP:*" hFBFBFB)
+Main.AddText("xm+16 ym+70 w240 h20 0x200 BackgroundFBFBFB", "Enable Awake")
+CB01 := Main.AddCheckBox("x+0 yp w80 h20 0x220 BackgroundFBFBFB", "Off ")
 CB01.OnEvent("Click", EventCall)
+
 
 Main.SetFont("s10 w600", "Segoe UI")
 Main.AddText("xm ym+130", "Behavior")
 
+
 Main.SetFont("s10 w400", "Segoe UI")
-Main.AddGroupBox("xm ym+145 w352 h61 Section")
-Main.AddPicture("xs+1 ys+9 w350 h50 BackgroundTrans", "HBITMAP:*" hFBFBFB)
-TX01 := Main.AddText("xs+15 ys+23 w245 h20 0x200 BackgroundFBFBFB Disabled", "Keep screen on")
-CB02 := Main.AddCheckBox("x+1 yp w75 h20 0x220 BackgroundFBFBFB Disabled", "Off ")
+Main.AddPicture("xm   ym+154 w352 h52 BackgroundTrans", "HBITMAP:*" hDCDCDC)
+Main.AddPicture("xm+1 ym+155 w350 h50 BackgroundTrans", "HBITMAP:*" hFBFBFB)
+TX01 := Main.AddText("xm+16 ym+170 w240 h20 0x200 BackgroundFBFBFB Disabled", "Keep screen on")
+CB02 := Main.AddCheckBox("x+0 yp w80 h20 0x220 BackgroundFBFBFB Disabled", "Off ")
 CB02.OnEvent("Click", EventCall)
 
+
 Main.SetFont("s10", "Segoe UI")
-Main.AddGroupBox("xm ym+200 w352 h262 Section")
-Main.AddPicture("xs+1 ys+9 w350 h251 BackgroundTrans", "HBITMAP:*" hFBFBFB)
-TX02 := Main.AddText("xs+15 ys+18 w300 h20 0x200 BackgroundFBFBFB Disabled", "Mode")
+Main.AddPicture("xm   ym+209 w352 h252 BackgroundTrans", "HBITMAP:*" hDCDCDC)
+Main.AddPicture("xm+1 ym+210 w350 h250 BackgroundTrans", "HBITMAP:*" hFBFBFB)
+TX02 := Main.AddText("xm+16 ym+218 w320 h20 0x200 BackgroundFBFBFB Disabled", "Mode")
 
 Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xs+15 y+0 w300 0x200 BackgroundFBFBFB", "Set the preferred behaviour or Awake")
+Main.AddText("xm+16 ym+238 w320 0x200 BackgroundFBFBFB", "Set the preferred behaviour or Awake")
+
 Main.SetFont("s10 cDefault norm", "Segoe UI")
+Main.AddPicture("xm+5 ym+260 w341 h1 BackgroundTrans", "HBITMAP:*" hHLINE)
 
-Main.AddPicture("xs+5 y+9 w341 h1 BackgroundTrans", "HBITMAP:*" hHLINE)
-
-RB01 := Main.AddRadio("xs+20 ys+70 w25 h20 BackgroundFBFBFB Checked Disabled")
+RB01 := Main.AddRadio("xm+20 ym+272 w25 h20 BackgroundFBFBFB Checked Disabled")
 RB01.OnEvent("Click", EventCall)
-RB02 := Main.AddRadio("xs+20 y+25 w25 h20 BackgroundFBFBFB Disabled")
+RB02 := Main.AddRadio("xm+20 ym+317 w25 h20 BackgroundFBFBFB Disabled")
 RB02.OnEvent("Click", EventCall)
-RB03 := Main.AddRadio("xs+20 y+25 w25 h20 BackgroundFBFBFB Disabled")
+RB03 := Main.AddRadio("xm+20 ym+362 w25 h20 BackgroundFBFBFB Disabled")
 RB03.OnEvent("Click", EventCall)
 
 Main.SetFont("s10", "Segoe UI")
-TX03 := Main.AddText("xs+45 ys+70 w280 h20 0x200 BackgroundFBFBFB Disabled", "Inactive")
+TX03 := Main.AddText("xm+45 ym+271 w280 h20 0x200 BackgroundFBFBFB Disabled", "Inactive")
 Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xs+45 y+0 w280 h13 0x200 BackgroundFBFBFB", "Your PC operates according to its current power plan")
+Main.AddText("xm+45 ym+291 w280 h13 0x200 BackgroundFBFBFB", "Your PC operates according to its current power plan")
 Main.SetFont("s10 cDefault norm", "Segoe UI")
 
-TX04 := Main.AddText("xs+45 y+12 w280 h20 0x200 BackgroundFBFBFB Disabled", "Keep awake indefinitely")
+TX04 := Main.AddText("xm+45 ym+316 w280 h20 0x200 BackgroundFBFBFB Disabled", "Keep awake indefinitely")
 Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xs+45 y+0 w280 h13 0x200 BackgroundFBFBFB", "Keeps your PC awake until the setting is disabled")
+Main.AddText("xm+45 ym+336 w280 h13 0x200 BackgroundFBFBFB", "Keeps your PC awake until the setting is disabled")
 Main.SetFont("s10 cDefault norm", "Segoe UI")
 
-TX05 := Main.AddText("xs+45 y+12 w280 h20 0x200 BackgroundFBFBFB Disabled", "Keep awake temporarily")
+TX05 := Main.AddText("xm+45 ym+361 w280 h20 0x200 BackgroundFBFBFB Disabled", "Keep awake temporarily")
 Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xs+45 y+0 w280 h13 0x200 BackgroundFBFBFB", "Keeps your PC awake until the set time elapses")
+Main.AddText("xm+45 ym+381 w280 h13 0x200 BackgroundFBFBFB", "Keeps your PC awake until the set time elapses")
 Main.SetFont("s10 cDefault norm", "Segoe UI")
 
-TX06 := Main.AddText("xs+45 y+8 w80 h20 0x200 BackgroundFBFBFB Disabled", "Hours")
+TX06 := Main.AddText("xm+45 ym+402 w80 h20 0x200 BackgroundFBFBFB Disabled", "Hours")
 TX07 := Main.AddText("x+5 yp w80 h20 0x200 BackgroundFBFBFB Disabled", "Minutes")
-ED01 := Main.AddEdit("xs+45 y+5 w80 Limit4 0x2000 Disabled")
+ED01 := Main.AddEdit("xm+45 ym+425 w80 Limit4 0x2000 Disabled")
 Main.AddUpDown("Range0-1192", 1)
 ED01.OnEvent("Change", EventCall)
 ED02 := Main.AddEdit("x+5 yp w80 Limit5 0x2000 Disabled")
 Main.AddUpDown("Range0-71568", 0)
 ED02.OnEvent("Change", EventCall)
+
 
 Main.OnEvent("Close", Gui_Hide)
 
@@ -141,6 +144,8 @@ Gui_Hide(*)
 
 ExitFunc(*)
 {
+	if (hDCDCDC)
+		DllCall("gdi32\DeleteObject", "ptr", hDCDCDC)
 	if (hFBFBFB)
 		DllCall("gdi32\DeleteObject", "ptr", hFBFBFB)
 	if (hHLINE)
@@ -265,11 +270,6 @@ SetPassive(ItemName, ItemPos, *)
 		RB01.Value := 1
 		RB02.Value := 0
 		RB03.Value := 0
-		/*
-		StayAwake.Stop()
-		StayAwake.Period := -1
-		StayAwake.Start()
-		*/
 	}
 	else
 	{
@@ -290,11 +290,6 @@ SetIndefinitely(ItemName, ItemPos, *)
 		RB01.Value := 0
 		RB02.Value := 1
 		RB03.Value := 0
-		/*
-		StayAwake.Stop()
-		StayAwake.Period := 0
-		StayAwake.Start()
-		*/
 	}
 	else
 	{
@@ -316,26 +311,21 @@ SetTemporarily(ItemName, ItemPos, *)
 		RB01.Value := 0
 		RB02.Value := 0
 		RB03.Value := 1
-		;StayAwake.Stop()
 		if (ItemName = "30 minutes")
 		{
 			ED01.Value := 0
 			ED02.Value := 30
-			;StayAwake.Period := 1000 * 60 * 30
 		}
 		if (ItemName = "1 hour")
 		{
 			ED01.Value := 1
 			ED02.Value := 0
-			;StayAwake.Period := 1000 * 60 * 60
 		}
 		if (ItemName = "2 hours")
 		{
 			ED01.Value := 2
 			ED02.Value := 0
-			;StayAwake.Period := 1000 * 60 * 120
 		}
-		;StayAwake.Start()
 	}
 	else
 	{
@@ -352,12 +342,10 @@ SetDisplayOn(ItemName, ItemPos, *)
 	if (MenuCheckState(TrayMain.Handle, ItemPos))
 	{
 		CB02.Value := 1
-		;StayAwake.Flags  := "DisplayOn"
 	}
 	else
 	{
 		CB02.Value := 0
-		;StayAwake.Flags  := ""
 	}
 	EventCall()
 }
@@ -402,7 +390,7 @@ class StayAwake
 	static Start()
 	{
 		this.Timer := Timer := this.RunLoop.bind(this)
-		SetTimer Timer, 5000
+		SetTimer Timer, 30000
 
 		if (this.Period > 0)
 		{
@@ -427,13 +415,10 @@ class StayAwake
 		{
 			case "DisplayOn":
 				this.SetState(this.EXECUTION_STATE.CONTINUOUS | this.EXECUTION_STATE.SYSTEM_REQUIRED | this.EXECUTION_STATE.DISPLAY_REQUIRED)
-				;MsgBox "DisplayOn"
 			case "AwayMode":
 				this.SetState(this.EXECUTION_STATE.CONTINUOUS | this.EXECUTION_STATE.SYSTEM_REQUIRED | this.EXECUTION_STATE.AWAYMODE_REQUIRED)
-				;MsgBox "AwayMode"
 			default:
 				this.SetState(this.EXECUTION_STATE.CONTINUOUS | this.EXECUTION_STATE.SYSTEM_REQUIRED)
-				;MsgBox "default"
 		}
 	}
 
