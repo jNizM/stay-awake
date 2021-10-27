@@ -1,10 +1,9 @@
 # Stay Awake (written in AutoHotkey)
-Stay Awake is a utility tool for Windows designed to keep a computer awake without having to manage its power & sleep settings.
+[![AHK](https://img.shields.io/badge/AHK-2.0--beta.3-C3D69B.svg?style=flat-square)]()
+[![OS](https://img.shields.io/badge/OS-Windows-C3D69B.svg?style=flat-square)]()
+[![Releases](https://img.shields.io/github/downloads/jNizM/stay-awake/total.svg?style=flat-square&color=95B3D7)](https://github.com/jNizM/stay-awake/releases)
 
-## Info
-[![OS](https://img.shields.io/badge/os-windows-green.svg?style=flat-square)]()
-[![AHK](https://img.shields.io/badge/AHK-2.0--beta.3-green.svg?style=flat-square)]()
-[![Releases](https://img.shields.io/github/downloads/jNizM/stay-awake/total.svg?style=flat-square&color=green)](https://github.com/jNizM/stay-awake/releases)
+Stay Awake is a utility tool for Windows designed to keep a computer awake without having to manage its power & sleep settings.
 
 
 ## Features
@@ -33,8 +32,8 @@ If you notice any kind of bugs or issues, report them on the [AHK Thread](https:
 
 
 ## Copyright and License
-[![MIT License](https://img.shields.io/github/license/jNizM/stay-awake.svg?style=flat-square&color=green)](LICENSE)
+[![MIT License](https://img.shields.io/github/license/jNizM/stay-awake.svg?style=flat-square&color=C3D69B)](LICENSE)
 
 
 ## Donations
-[![PayPal](https://img.shields.io/badge/paypal-donate-ff69b4.svg?style=flat-square)](https://www.paypal.me/smithz)
+[![PayPal](https://img.shields.io/badge/paypal-donate-B2A2C7.svg?style=flat-square)](https://www.paypal.me/smithz)
