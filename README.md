@@ -1,5 +1,6 @@
 # Stay Awake (written in AutoHotkey)
 Stay Awake is a utility tool for Windows designed to keep a computer awake without having to manage its power & sleep settings.
+[![Github All Releases](https://img.shields.io/github/downloads/jNizM/stay-awake/total.svg?style=flat-square&color=brightgreen)]()  
 
 
 ## Features
@@ -28,8 +29,8 @@ If you notice any kind of bugs or issues, report them on the [AHK Thread](https:
 
 
 ## Copyright and License
-[MIT License](LICENSE)
+[![MIT License](https://img.shields.io/github/license/jNizM/stay-awake.svg?style=flat-square&color=green)](LICENSE)
 
 
 ## Donations
-[Donations are appreciated if I could help you](https://www.paypal.me/smithz)
+[![PayPal](https://img.shields.io/badge/paypal-donate-ff69b4.svg?style=flat-square)](https://www.paypal.me/smithz)
