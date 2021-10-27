@@ -2,8 +2,8 @@
 Stay Awake is a utility tool for Windows designed to keep a computer awake without having to manage its power & sleep settings.
 
 ## Info
-[![Releases](https://img.shields.io/github/downloads/jNizM/stay-awake/total.svg?style=flat-square&color=brightgreen)](stay-awake/releases)
-[![OS](https://img.shields.io/badge/os-windows-brightgreen.svg?style=flat-square)]()
+[![OS](https://img.shields.io/badge/os-windows-green.svg?style=flat-square)]()
+[![Releases](https://img.shields.io/github/downloads/jNizM/stay-awake/total.svg?style=flat-square&color=green)](https://github.com/jNizM/stay-awake/releases)
 
 
 ## Features
