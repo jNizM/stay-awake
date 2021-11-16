@@ -1,7 +1,7 @@
 ; ===========================================================================================================================================================================
 
 /*
-	Stay Awake (written in AutoHotkey)
+	Stay Awake [Dark Mode] (written in AutoHotkey)
 
 	Author ....: jNizM
 	Released ..: 2021-10-21
@@ -24,9 +24,13 @@ Persistent
 
 app := Map("name", "Stay Awake", "version", "0.3", "release", "2021-11-16", "author", "jNizM", "licence", "MIT")
 
-hFBFBFB := DllCall("gdi32\CreateBitmap", "Int", 1, "Int", 1, "UInt", 0x1, "UInt", 32, "Int64*", 0xfbfbfb, "Ptr")
+h858585 := DllCall("gdi32\CreateBitmap", "Int", 1, "Int", 1, "UInt", 0x1, "UInt", 32, "Int64*", 0x858585, "Ptr")
 hDCDCDC := DllCall("gdi32\CreateBitmap", "Int", 1, "Int", 1, "UInt", 0x1, "UInt", 32, "Int64*", 0xdcdcdc, "Ptr")
 hHLINE  := DllCall("gdi32\CreateBitmap", "Int", 1, "Int", 2, "UInt", 0x1, "UInt", 32, "Int64*", 0x7fa5a5a57f5a5a5a, "Ptr")
+
+BackColor := "414141"
+FontColor := "E9E9E9"
+InfoColor := "C3C3C3"
 
 
 ; TRAY ======================================================================================================================================================================
@@ -54,78 +58,91 @@ TrayMain.Add("Exit", ExitFunc)
 ; GUI =======================================================================================================================================================================
 
 Main := Gui(, app["name"])
+Main.BackColor := BackColor
 Main.MarginX := 15
 Main.MarginY := 15
 
-Main.SetFont("s20 w600", "Segoe UI")
+Main.SetFont("s20 c" FontColor " w600", "Segoe UI")
 Main.AddText("xm ym w300 0x200", app["name"])
 
 
 Main.SetFont("s10 w400", "Segoe UI")
 Main.AddPicture("xm   ym+54 w352 h52 BackgroundTrans", "HBITMAP:*" hDCDCDC)
-Main.AddPicture("xm+1 ym+55 w350 h50 BackgroundTrans", "HBITMAP:*" hFBFBFB)
-Main.AddText("xm+16 ym+70 w240 h20 0x200 BackgroundFBFBFB", "Enable Awake")
-CB01 := Main.AddCheckBox("x+0 yp w80 h20 0x220 BackgroundFBFBFB", "Off ")
+Main.AddPicture("xm+1 ym+55 w350 h50 BackgroundTrans", "HBITMAP:*" h858585)
+Main.AddText("xm+16 ym+70 w240 h20 0x200 Background858585", "Enable Awake")
+TX01 := Main.AddText("x+0 yp w60 h20 0x202 Background858585", "Off")
+Main.SetFont("s10 cDefault norm", "Segoe UI")
+CB01 := Main.AddCheckBox("x+0 yp w20 h20 0x220 Background858585")
 CB01.OnEvent("Click", EventCall)
 
 
-Main.SetFont("s10 w600", "Segoe UI")
+Main.SetFont("s10 c" FontColor " w600", "Segoe UI")
 Main.AddText("xm ym+130", "Behavior")
 
 
 Main.SetFont("s10 w400", "Segoe UI")
 Main.AddPicture("xm   ym+154 w352 h52 BackgroundTrans", "HBITMAP:*" hDCDCDC)
-Main.AddPicture("xm+1 ym+155 w350 h50 BackgroundTrans", "HBITMAP:*" hFBFBFB)
-TX01 := Main.AddText("xm+16 ym+170 w240 h20 0x200 BackgroundFBFBFB Disabled", "Keep screen on")
-CB02 := Main.AddCheckBox("x+0 yp w80 h20 0x220 BackgroundFBFBFB Disabled", "Off ")
+Main.AddPicture("xm+1 ym+155 w350 h50 BackgroundTrans", "HBITMAP:*" h858585)
+Main.AddText("xm+16 ym+170 w240 h20 0x200 Background858585", "Keep screen on")
+TX02 := Main.AddText("x+0 yp w60 h20 0x202 Background858585", "Off")
+Main.SetFont("s10 cDefault norm", "Segoe UI")
+CB02 := Main.AddCheckBox("x+0 yp w20 h20 0x220 Background858585 Disabled")
 CB02.OnEvent("Click", EventCall)
 
 
-Main.SetFont("s10", "Segoe UI")
+Main.SetFont("s10 c" FontColor, "Segoe UI")
 Main.AddPicture("xm   ym+209 w352 h252 BackgroundTrans", "HBITMAP:*" hDCDCDC)
-Main.AddPicture("xm+1 ym+210 w350 h250 BackgroundTrans", "HBITMAP:*" hFBFBFB)
-TX02 := Main.AddText("xm+16 ym+218 w320 h20 0x200 BackgroundFBFBFB Disabled", "Mode")
+Main.AddPicture("xm+1 ym+210 w350 h250 BackgroundTrans", "HBITMAP:*" h858585)
+Main.AddText("xm+16 ym+218 w320 h20 0x200 Background858585", "Mode")
 
-Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xm+16 ym+238 w320 0x200 BackgroundFBFBFB", "Set the preferred behaviour or Awake")
+Main.SetFont("s8 c" InfoColor, "Segoe UI")
+Main.AddText("xm+16 ym+238 w320 0x200 Background858585", "Set the preferred behaviour or Awake")
 
 Main.SetFont("s10 cDefault norm", "Segoe UI")
 Main.AddPicture("xm+5 ym+260 w341 h1 BackgroundTrans", "HBITMAP:*" hHLINE)
 
-RB01 := Main.AddRadio("xm+20 ym+272 w25 h20 BackgroundFBFBFB Checked Disabled")
+RB01 := Main.AddRadio("xm+20 ym+272 w25 h20 Background858585 Checked Disabled")
 RB01.OnEvent("Click", EventCall)
-RB02 := Main.AddRadio("xm+20 ym+317 w25 h20 BackgroundFBFBFB Disabled")
+RB02 := Main.AddRadio("xm+20 ym+317 w25 h20 Background858585 Disabled")
 RB02.OnEvent("Click", EventCall)
-RB03 := Main.AddRadio("xm+20 ym+362 w25 h20 BackgroundFBFBFB Disabled")
+RB03 := Main.AddRadio("xm+20 ym+362 w25 h20 Background858585 Disabled")
 RB03.OnEvent("Click", EventCall)
 
-Main.SetFont("s10", "Segoe UI")
-TX03 := Main.AddText("xm+45 ym+271 w280 h20 0x200 BackgroundFBFBFB Disabled", "Inactive")
-Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xm+45 ym+291 w280 h13 0x200 BackgroundFBFBFB", "Your PC operates according to its current power plan")
-Main.SetFont("s10 cDefault norm", "Segoe UI")
+Main.SetFont("s10 c" FontColor, "Segoe UI")
+Main.AddText("xm+45 ym+271 w280 h20 0x200 Background858585", "Inactive")
+Main.SetFont("s8 c" InfoColor, "Segoe UI")
+Main.AddText("xm+45 ym+291 w280 h13 0x200 Background858585", "Your PC operates according to its current power plan")
 
-TX04 := Main.AddText("xm+45 ym+316 w280 h20 0x200 BackgroundFBFBFB Disabled", "Keep awake indefinitely")
-Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xm+45 ym+336 w280 h13 0x200 BackgroundFBFBFB", "Keeps your PC awake until the setting is disabled")
-Main.SetFont("s10 cDefault norm", "Segoe UI")
+Main.SetFont("s10 c" FontColor, "Segoe UI")
+Main.AddText("xm+45 ym+316 w280 h20 0x200 Background858585", "Keep awake indefinitely")
+Main.SetFont("s8 c" InfoColor, "Segoe UI")
+Main.AddText("xm+45 ym+336 w280 h13 0x200 Background858585", "Keeps your PC awake until the setting is disabled")
 
-TX05 := Main.AddText("xm+45 ym+361 w280 h20 0x200 BackgroundFBFBFB Disabled", "Keep awake temporarily")
-Main.SetFont("s8 c777777", "Segoe UI")
-Main.AddText("xm+45 ym+381 w280 h13 0x200 BackgroundFBFBFB", "Keeps your PC awake until the set time elapses")
-Main.SetFont("s10 cDefault norm", "Segoe UI")
+Main.SetFont("s10 c" FontColor, "Segoe UI")
+Main.AddText("xm+45 ym+361 w280 h20 0x200 Background858585", "Keep awake temporarily")
+Main.SetFont("s8 c" InfoColor, "Segoe UI")
+Main.AddText("xm+45 ym+381 w280 h13 0x200 Background858585", "Keeps your PC awake until the set time elapses")
 
-TX06 := Main.AddText("xm+45 ym+402 w80 h20 0x200 BackgroundFBFBFB Disabled", "Hours")
-TX07 := Main.AddText("x+5 yp w80 h20 0x200 BackgroundFBFBFB Disabled", "Minutes")
-ED01 := Main.AddEdit("xm+45 ym+425 w80 Limit4 0x2000 Disabled")
+Main.SetFont("s10 c" FontColor, "Segoe UI")
+Main.AddText("xm+45 ym+402 w80 h20 0x200 Background858585", "Hours")
+Main.AddText("x+5 yp w80 h20 0x200 Background858585", "Minutes")
+ED01 := Main.AddEdit("xm+45 ym+425 w80 Limit4 0x2000 c373737 BackgroundC3C3C3 Disabled")
 Main.AddUpDown("Range0-1192", 1)
 ED01.OnEvent("Change", EventCall)
-ED02 := Main.AddEdit("x+5 yp w80 Limit5 0x2000 Disabled")
+ED02 := Main.AddEdit("x+5 yp w80 Limit5 0x2000 c373737 BackgroundC3C3C3 Disabled")
 Main.AddUpDown("Range0-71568", 0)
 ED02.OnEvent("Change", EventCall)
 
 
 Main.OnEvent("Close", Gui_Hide)
+
+if (VerCompare(A_OSVersion, "10.0.17763") >= 0) {
+	DWMWA_USE_IMMERSIVE_DARK_MODE := 19
+	if (VerCompare(A_OSVersion, "10.0.18985") >= 0) {
+		DWMWA_USE_IMMERSIVE_DARK_MODE := 20
+	}
+	DllCall("dwmapi\DwmSetWindowAttribute", "Ptr", Main.hWnd, "Int", DWMWA_USE_IMMERSIVE_DARK_MODE, "int*", true, "Int", 4)
+}
 
 
 ; WINDOW EVENTS =============================================================================================================================================================
@@ -146,8 +163,8 @@ ExitFunc(*)
 {
 	if (hDCDCDC)
 		DllCall("gdi32\DeleteObject", "Ptr", hDCDCDC)
-	if (hFBFBFB)
-		DllCall("gdi32\DeleteObject", "Ptr", hFBFBFB)
+	if (h858585)
+		DllCall("gdi32\DeleteObject", "Ptr", h858585)
 	if (hHLINE)
 		DllCall("gdi32\DeleteObject", "Ptr", hHLINE)
 	Main.Destroy()
@@ -161,8 +178,6 @@ EventCall(*)
 	StayAwake.Stop()
 	if (RB03.Value)
 	{
-		TX07.Opt("-Disabled")
-		TX06.Opt("-Disabled")
 		ED01.Opt("-Disabled")
 		ED02.Opt("-Disabled")
 		TrayMode.UnCheck("Off (Passive)")
@@ -172,8 +187,6 @@ EventCall(*)
 	}
 	else
 	{
-		TX07.Opt("+Disabled")
-		TX06.Opt("+Disabled")
 		ED01.Opt("+Disabled")
 		ED02.Opt("+Disabled")
 		TrayMode.UnCheck("Keep awake temporarily")
@@ -208,13 +221,13 @@ EventCall(*)
 
 	if (CB02.Value)
 	{
-		CB02.Text := "On "
+		TX02.Text := "On"
 		TrayMain.Check("Keep Screen On")
 		StayAwake.Flags := "DisplayOn"
 	}
 	else
 	{
-		CB02.Text := "Off "
+		TX02.Text := "Off"
 		TrayMain.UnCheck("Keep Screen On")
 		StayAwake.Flags := ""
 	}
@@ -222,12 +235,7 @@ EventCall(*)
 
 	if (CB01.Value)
 	{
-		CB01.Text := "On "
-		TX05.Opt("-Disabled")
-		TX04.Opt("-Disabled")
-		TX03.Opt("-Disabled")
-		TX02.Opt("-Disabled")
-		TX01.Opt("-Disabled")
+		TX01.Text := "On"
 		RB03.Opt("-Disabled")
 		RB02.Opt("-Disabled")
 		RB01.Opt("-Disabled")
@@ -236,14 +244,7 @@ EventCall(*)
 	}
 	else
 	{
-		CB01.Text := "Off "
-		TX07.Opt("+Disabled")
-		TX06.Opt("+Disabled")
-		TX05.Opt("+Disabled")
-		TX04.Opt("+Disabled")
-		TX03.Opt("+Disabled")
-		TX02.Opt("+Disabled")
-		TX01.Opt("+Disabled")
+		TX01.Text := "Off"
 		ED01.Opt("+Disabled")
 		ED02.Opt("+Disabled")
 		RB03.Opt("+Disabled")
